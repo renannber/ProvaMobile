@@ -10,7 +10,7 @@
         android:label="ProvaMobile"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.UserRegistrationApp">
+        android:theme="@style/Theme.ProvaMobile">
 
         <activity
             android:name=".MainActivity"

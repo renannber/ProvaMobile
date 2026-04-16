@@ -1,11 +1,17 @@
 package com.nan.provamobile;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         Button buttonReport = findViewById(R.id.buttonReport);
 
         //Configuração do banco de dados ROOM
-        ProductDatabase db = Room.databaseBuilder(getApplicationContext(),
-                ProductDatabase.class, "product-database").allowMainThreadQueries().build();
+        ProdutoDataBase db = Room.databaseBuilder(getApplicationContext(),
+                ProdutoDataBase.class, "produto-database").allowMainThreadQueries().build();
         produtoDao = db.produtoDao();  //Obter a instância da DAO
 
         //Configuração do Botão Salvar
@@ -52,15 +58,16 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity","Nome: " +name+ ", Codigo: " +codigo+", Preço: " +priceText+", Quantidade: "+amountText);
 
             //Verificar se campos obrigatórios foram preenchidos
-            if(!name.isEmpty() && !codigo.isEmpty() && !priceText.isEmpty() &&amountText.isEmpty()){
+            if(!name.isEmpty() && !codigo.isEmpty() && !priceText.isEmpty() &&!amountText.isEmpty()){
                 //convertendo texto para double
                 double price = Double.parseDouble(priceText);
                 //convertendo texto para int
                 int amount = Integer.parseInt(amountText);
 
                 //Cria um novo objeto e insere no banco
-                Produto product = new Produto(name, price);
-                produtoDao.Insert(product);
+                Produto produto = new Produto(name,codigo,price,amount);
+                produtoDao.Insert(produto);
+
 
                 // Confirma a inserção
                 Log.d("MainActivity", "Produto inserido no banco de dados.");
@@ -74,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Preencha os campos obrigatórios!", Toast.LENGTH_SHORT).show();
             }
         });
-
+        // Configurar o botão de relatório para abrir a tela de relatório
+        buttonReport.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ReportActivity.class))
+        );
 
     }
 }
+

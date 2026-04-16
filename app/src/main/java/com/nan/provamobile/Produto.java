@@ -4,13 +4,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Product {
+public class Produto {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String name;
 
-    //String pois aceita numeros e letras
+    //String porque aceita numeros e letras
     private String code;
 
     private double price;
@@ -18,7 +18,7 @@ public class Product {
     private int amount;
 
     //construtor
-    public Product(String name, String code, double price, int amount){
+    public Produto(String name, String code, double price, int amount){
         this.name = name;
         this.code = code;
         this.price = price;
@@ -42,4 +42,4 @@ public class Product {
     //preço
     public double getPrice(){return price;}
     //quantidade
-    public int getAmount(){return amount;}
+    public int getAmount(){return amount;} }
